@@ -12,7 +12,7 @@ class WorkerController extends Controller
      */
     public function index()
     {
-        //
+        return Worker::all();
     }
 
     /**
@@ -20,30 +20,48 @@ class WorkerController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
 
+    
+        $worker = Worker::create($request->all());
+    
+        return response()->json(['message' => 'Worker created successfully', 'worker' => $worker], 201);
+    }
     /**
      * Display the specified resource.
      */
-    public function show(worker $worker)
+    public function show($id)
     {
-        //
+        $worker = Worker::find($id);
+        if (!$worker) {
+            return response()->json(['message' => 'Worker not found'], 404);
+        }
+
+        return $worker;
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, worker $worker)
+    public function update(Request $request, $id)
     {
-        //
+        $worker = worker::find($id);
+        if (!$worker) {
+            return response()->json(['message' => 'Worker not found'], 404);
+        }
+        $worker->update($request->all());
+        return response()->json($worker, 200);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(worker $worker)
+    public function destroy($id)
     {
-        //
+        $worker = worker::find($id);
+        if (!$worker) {
+            return response()->json(['message' => 'Worker not found'], 404);
+        }
+        $worker->delete();
+        return response()->json(['message' => 'Worker deleted successfully'], 200);
     }
 }
