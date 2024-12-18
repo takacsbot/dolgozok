@@ -10,9 +10,8 @@ class WorkerController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        return Worker::all();
+    public function index(){
+        return Worker::with('department')->get();
     }
 
     /**

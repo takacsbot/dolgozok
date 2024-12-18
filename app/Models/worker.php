@@ -12,4 +12,8 @@ class worker extends Model
         'email',
         'picture'
     ];
+    public function department()
+    {
+        return $this->belongsTo(Department::class);
+    }
 }
